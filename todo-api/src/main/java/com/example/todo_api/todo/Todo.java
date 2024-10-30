@@ -36,4 +36,8 @@ public class Todo {
         this.isChecked = isChecked;
         this.member = member;
     }
+
+    public void updateContent(String newContent){
+        this.content = newContent;
+    }
 }

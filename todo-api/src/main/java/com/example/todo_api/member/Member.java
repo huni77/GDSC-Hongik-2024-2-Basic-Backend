@@ -1,8 +1,10 @@
 package com.example.todo_api.member;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Member {
 
     @Id
@@ -11,7 +13,7 @@ public class Member {
     private Long id;
 
     @Column(name = "member_login")
-    private String login;
+    private final String login;
 
     // 생성자
     public Member(String login) {
