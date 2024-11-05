@@ -2,8 +2,13 @@ package com.example.todo_api.friends;
 
 import com.example.todo_api.member.Member;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Friends {
 
     @Id // Private Key
@@ -15,5 +20,7 @@ public class Friends {
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
+    public Friends(Member member) { this.member = member; }
 
 }

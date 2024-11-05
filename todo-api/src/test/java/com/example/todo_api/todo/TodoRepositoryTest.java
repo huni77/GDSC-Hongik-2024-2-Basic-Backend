@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
-import javax.sound.midi.MetaMessage;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TodoRepositoryTest {
@@ -32,6 +30,7 @@ public class TodoRepositoryTest {
 
         // 트랜잭션 종료 => 커밋
         // 에러가 발생했을 때 자동으로 롤백
+        org.assertj.core.api.Assertions.assertThat(todo.getId()).isNotNull();
     }
 
     @Test
