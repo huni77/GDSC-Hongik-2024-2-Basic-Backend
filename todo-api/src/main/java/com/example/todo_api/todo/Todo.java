@@ -21,7 +21,7 @@ public class Todo {
     private String content;
 
     @Column(name = "todo_is_checked",columnDefinition = "tinyint(1)")
-    private  boolean isChecked;
+    private  boolean isChecked = false;
 
     // 외래키 생성하기
     // 외래키임을 명시
@@ -31,9 +31,8 @@ public class Todo {
     private Member member;
 
     // 생성자 함수
-    public Todo(String content, boolean isChecked, Member member) {
+    public Todo(String content, Member member) {
         this.content = content;
-        this.isChecked = isChecked;
         this.member = member;
     }
 
