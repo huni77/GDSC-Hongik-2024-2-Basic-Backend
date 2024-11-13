@@ -17,7 +17,7 @@ public class TodoService {
     // Create
     // 할 일 생성
     @Transactional
-    public void createTodo(String content, Long memberId) throws Exception{
+    public Long createTodo(String content, Long memberId) throws Exception{
         Member member = memberRepository.findById(memberId);
 
         // 예외처리
@@ -27,11 +27,12 @@ public class TodoService {
 
         Todo todo = new Todo(content, member);
         todoRepository.save(todo);
+        return todo.getId();
     }
 
     // Read
     @Transactional(readOnly = true) // 읽기 전용
-    public List<Todo> getAllTodo(Long memberId) throws Exception {
+    public List<Todo> getTodoList(Long memberId) throws Exception {
         Member member = memberRepository.findById(memberId);
 
         // 예외처리
@@ -65,9 +66,11 @@ public class TodoService {
     }
     // Delete
     @Transactional
-    public void deleteTodo(Long todoId) {
+    public void deleteTodo(Long todoId) throws Exception {
         Todo todo = todoRepository.findById(todoId);
-        todoRepository.delete(todo);
+        if (todo == null) {
+            throw new Exception("존재하지 않는 할 일 입니다.");
+        }
+        todoRepository.deleteById(todoId);
     }
-
 }
