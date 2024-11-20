@@ -1,5 +1,7 @@
 package com.example.todo_api.todo;
 
+import com.example.todo_api.common.exeption.BadRequestException;
+import com.example.todo_api.common.message.ErrorMessage;
 import com.example.todo_api.member.Member;
 import com.example.todo_api.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ public class TodoService {
 
         // 예외처리
         if (member == null){
-            throw new Exception("존재하지 않는 멤버입니다.");
+            throw new BadRequestException(ErrorMessage.MEMBER_NOT_EXISTS);
         }
 
         Todo todo = new Todo(content, member);
@@ -37,7 +39,7 @@ public class TodoService {
 
         // 예외처리
         if (member == null){
-            throw new Exception("존재하지 않는 멤버입니다.");
+            throw new BadRequestException(ErrorMessage.MEMBER_NOT_EXISTS);
         }
 
         return todoRepository.findAllByMember(member);
@@ -51,15 +53,15 @@ public class TodoService {
 
         // 예외처리
         if (todo == null){
-            throw new Exception("존재하지 않는 할 일 입니다.");
+            throw new BadRequestException(ErrorMessage.TODO_NOT_EXISTS);
         }
 
         if (member == null){
-            throw new Exception("존재하지 않는 멤버입니다.");
+            throw new BadRequestException(ErrorMessage.MEMBER_NOT_EXISTS);
         }
 
         if (todo.getMember() != member) {
-            throw new Exception("다른 유저의 할 일을 수정할 수 없습니다.");
+            throw new BadRequestException(ErrorMessage.CANNOT_UPDATE_OTHERS_TODO);
         }
 
         todo.updateContent(newContent);
@@ -69,7 +71,7 @@ public class TodoService {
     public void deleteTodo(Long todoId) throws Exception {
         Todo todo = todoRepository.findById(todoId);
         if (todo == null) {
-            throw new Exception("존재하지 않는 할 일 입니다.");
+            throw new BadRequestException(ErrorMessage.TODO_NOT_EXISTS);
         }
         todoRepository.deleteById(todoId);
     }

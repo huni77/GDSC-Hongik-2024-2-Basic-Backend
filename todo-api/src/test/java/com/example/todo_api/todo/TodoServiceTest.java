@@ -1,5 +1,6 @@
 package com.example.todo_api.todo;
 
+import com.example.todo_api.common.message.ErrorMessage;
 import com.example.todo_api.member.Member;
 import com.example.todo_api.member.MemberRepository;
 import org.assertj.core.api.Assertions;
@@ -48,7 +49,7 @@ public class TodoServiceTest {
         // 멤버가 존재하지 않는다는 에러가 발생하길 기대
         Assertions.assertThatThrownBy(()->{
             todoService.createTodo("content",1234567L);
-        }).hasMessageContaining("존재하지 않는 멤버입니다.").isInstanceOf(Exception.class);
+        }).hasMessageContaining(ErrorMessage.MEMBER_NOT_EXISTS).isInstanceOf(Exception.class);
 
     }
 
